@@ -10,10 +10,10 @@
         android:id="@+id/tvSignI"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:textSize="18sp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="300dp"/>
 
@@ -21,10 +21,10 @@
         android:id="@+id/tvSignU"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:textSize="18sp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="370dp"/>
 

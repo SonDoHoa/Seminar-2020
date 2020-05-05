@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SOHO_Seminar_2020</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="password">Password</string>
+    <string name="skip_for_now">Skip for now</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign-Up?</string>
+    <string name="have_an_account_sign_in">Have an account? Sign-In?</string>
+    <string name="register">Register</string>
+    <string name="email">Your email</string>
 </resources>
