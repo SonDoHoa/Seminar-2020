@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "970435453444",
+    "firebase_url": "https://soho-b1931.firebaseio.com",
+    "project_id": "soho-b1931",
+    "storage_bucket": "soho-b1931.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970435453444:android:be3eb7b6d1fc0448f2cb51",
+        "android_client_info": {
+          "package_name": "com.example.soho_seminar_2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970435453444-ojtfqn1uj30verd91na4v17jenlfpr16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soho_seminar_2020",
+            "certificate_hash": "7938530c456e7b7cfa02baf6aaed7c9636fe4412"
+          }
+        },
+        {
+          "client_id": "970435453444-kdvfla360ivh474lfj6ahk2c1i7fele6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuWWOs9ha0Ia2H0jyC9-BEEUvq6OpHDkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "970435453444-kdvfla360ivh474lfj6ahk2c1i7fele6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
