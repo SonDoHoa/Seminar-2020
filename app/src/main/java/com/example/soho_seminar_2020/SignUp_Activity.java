@@ -3,11 +3,13 @@ package com.example.soho_seminar_2020;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +22,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignUp_Activity extends AppCompatActivity {
     private TextView tvToSignIn;
-    private EditText s1_email, s2_password;
+    private Button btnSignUp;
+    private EditText s1_email, s2_password, s3_username;
     private FirebaseAuth mAuth;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,10 @@ public class SignUp_Activity extends AppCompatActivity {
         tvToSignIn = (TextView)findViewById(R.id.tvToSignIn);
         s1_email=(EditText)findViewById(R.id.txtEmail);
         s2_password=(EditText)findViewById(R.id.txtPass);
+        s3_username=(EditText)findViewById(R.id.txtName);
+        btnSignUp=(Button)findViewById(R.id.btnSignUp);
         mAuth = FirebaseAuth.getInstance();
+        dialog = new ProgressDialog(this);
 
         tvToSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,10 +46,20 @@ public class SignUp_Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signUpUser();
+            }
+        });
     }
 
-    protected  void signUpUser(View v){
-        if(s1_email.getText().toString().equals("") || s2_password.getText().toString().equals("")){
+    protected  void signUpUser(){
+        dialog.setMessage("Registering. Please wait.");
+        dialog.show();
+
+        if(s3_username.getText().toString().equals("") || s1_email.getText().toString().equals("") || s2_password.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(),"Fields cannot be empty",Toast.LENGTH_SHORT).show();
         }
         else{
@@ -51,12 +68,14 @@ public class SignUp_Activity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),"create with email: success",Toast.LENGTH_SHORT).show();
-                                FirebaseUser createUser = mAuth.getCurrentUser();
-                                updateUI(createUser);
+                                dialog.hide();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                                finish();
                             } else{
+                                dialog.hide();
                                 Toast.makeText(getApplicationContext(),"Authentication failed.",Toast.LENGTH_SHORT).show();
-                                updateUI(null);
+                                finish();
                             }
                         }
                     });
@@ -66,7 +85,7 @@ public class SignUp_Activity extends AppCompatActivity {
     protected void updateUI(FirebaseUser account){
         if(account != null){
             Toast.makeText(this,"You Signed up successfully",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this,SignIn_Activity.class));
+            startActivity(new Intent(SignUp_Activity.this,SignIn_Activity.class));
         }else {
             Toast.makeText(this,"You didn't signed up",Toast.LENGTH_LONG).show();
         }

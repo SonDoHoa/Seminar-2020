@@ -8,4 +8,5 @@
     <string name="have_an_account_sign_in">Have an account? Sign-In?</string>
     <string name="register">Register</string>
     <string name="email">Your email</string>
+    <string name="user_name">User name</string>
 </resources>

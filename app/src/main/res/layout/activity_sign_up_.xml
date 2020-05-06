@@ -7,6 +7,18 @@
     tools:context=".SignIn_Activity">
 
     <EditText
+        android:id="@+id/txtName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_name"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="230dp"
+        android:autofillHints=""
+        android:inputType="text" />
+
+    <EditText
         android:id="@+id/txtEmail"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -31,7 +43,7 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnSignI"
+        android:id="@+id/btnSignUp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="@string/register"

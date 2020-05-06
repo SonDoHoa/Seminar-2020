@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="300dp"
         android:autofillHints=""
-        android:inputType="text" />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/txtPassId"

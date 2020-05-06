@@ -7,13 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
     private TextView btnSignin, btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null){
+            startActivity(new Intent(MainActivity.this,SetTravel_Activity.class));
+            finish();
+        }else{
+            setContentView(R.layout.activity_main);
+        }
+
         btnSignin = (TextView)findViewById(R.id.tvSignI);
         btnSignUp = (TextView)findViewById(R.id.tvSignU);
 
