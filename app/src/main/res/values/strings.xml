@@ -9,4 +9,6 @@
     <string name="register">Register</string>
     <string name="email">Your email</string>
     <string name="user_name">User name</string>
+    <string name="title_activity_map_customer">Map</string>
+    <string name="title_activity_map_driver">Map</string>
 </resources>

@@ -5,22 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.soho_seminar_2020.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class SignUp_Activity extends AppCompatActivity {
+public class DriverSignUpActivity extends AppCompatActivity {
+
     private TextView tvToSignIn;
     private Button btnSignUp;
     private EditText s1_email, s2_password, s3_username;
@@ -30,19 +32,20 @@ public class SignUp_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_);
-        tvToSignIn = (TextView)findViewById(R.id.tvToSignIn);
-        s1_email=(EditText)findViewById(R.id.txtEmail);
-        s2_password=(EditText)findViewById(R.id.txtPass);
-        s3_username=(EditText)findViewById(R.id.txtName);
-        btnSignUp=(Button)findViewById(R.id.btnSignUp);
+        setContentView(R.layout.activity_driver_sign_up);
+        getSupportActionBar().show();
+        tvToSignIn = (TextView)findViewById(R.id.toSignInDrivers);
+        s1_email=(EditText)findViewById(R.id.mailDrivers);
+        s2_password=(EditText)findViewById(R.id.passDrivers);
+        s3_username=(EditText)findViewById(R.id.nameDrivers);
+        btnSignUp=(Button)findViewById(R.id.signUpDrivers);
         mAuth = FirebaseAuth.getInstance();
         dialog = new ProgressDialog(this);
 
         tvToSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SignUp_Activity.this,SignIn_Activity.class);
+                Intent i = new Intent(DriverSignUpActivity.this,DriverSignInActivity.class);
                 startActivity(i);
             }
         });
@@ -71,6 +74,10 @@ public class SignUp_Activity extends AppCompatActivity {
                                 dialog.hide();
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 updateUI(user);
+                                String userId = mAuth.getCurrentUser().getUid();
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(userId)
+                                        .child("name");
+                                reference.setValue(s1_email.getText().toString());
                                 finish();
                             } else{
                                 dialog.hide();
@@ -85,7 +92,7 @@ public class SignUp_Activity extends AppCompatActivity {
     protected void updateUI(FirebaseUser account){
         if(account != null){
             Toast.makeText(this,"You Signed up successfully",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(SignUp_Activity.this,SignIn_Activity.class));
+            startActivity(new Intent(DriverSignUpActivity.this,MapDriverActivity.class));
         }else {
             Toast.makeText(this,"You didn't signed up",Toast.LENGTH_LONG).show();
         }

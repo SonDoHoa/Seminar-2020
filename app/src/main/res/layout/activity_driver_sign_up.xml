@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriverSignUpActivity">
+
+    <EditText
+        android:id="@+id/nameDrivers"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_name"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="230dp"
+        android:autofillHints=""
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/mailDrivers"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="300dp"
+        android:autofillHints=""
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/passDrivers"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="370dp"
+        android:autofillHints=""
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/signUpDrivers"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="440dp"/>
+
+    <TextView
+        android:id="@+id/toSignInDrivers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/have_an_account_sign_in"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="140dp"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

@@ -4,22 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignIn_Activity">
+    tools:context=".DriverSignInActivity">
 
-    <EditText
-        android:id="@+id/txtName"
-        android:layout_width="300dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/user_name"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="60dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="230dp"
-        android:autofillHints=""
-        android:inputType="text" />
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="139dp"
+        android:text="Drivers"
+        android:textSize="70sp" />
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/editTextMailDrivers"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/email"
@@ -31,7 +29,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/txtPass"
+        android:id="@+id/editTextPassDrivers"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/password"
@@ -43,34 +41,25 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnSignUp"
+        android:id="@+id/btnSignInDri"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="@string/register"
+        android:text="@string/sign_in"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="440dp"/>
+        android:layout_marginTop="440dp"
+        android:clickable="true"/>
 
     <TextView
-        android:id="@+id/tvToSignIn"
+        android:id="@+id/btnToSignUpDri"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/have_an_account_sign_in"
+        android:text="@string/don_t_have_an_account_sign_up"
         android:textColor="#000000"
         android:textSize="18sp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="140dp"
         android:layout_centerInParent="true"/>
 
-    <TextView
-        android:id="@+id/tvSkip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/skip_for_now"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        android:layout_centerInParent="true"/>
 </RelativeLayout>

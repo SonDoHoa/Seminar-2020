@@ -11,34 +11,29 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView btnSignin, btnSignUp;
+    private TextView buttonDrivers, buttonCustomers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
-            startActivity(new Intent(MainActivity.this,SetTravel_Activity.class));
-            finish();
-        }else{
-            setContentView(R.layout.activity_main);
-        }
+        setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
-        btnSignin = (TextView)findViewById(R.id.tvSignI);
-        btnSignUp = (TextView)findViewById(R.id.tvSignU);
+        buttonDrivers = (TextView)findViewById(R.id.tvDriver);
+        buttonCustomers = (TextView)findViewById(R.id.tvCustomer);
 
-        btnSignin.setOnClickListener(new View.OnClickListener() {
+        buttonDrivers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SignIn_Activity.class);
+                Intent i = new Intent(MainActivity.this, DriverSignInActivity.class);
                 startActivity(i);
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        buttonCustomers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SignUp_Activity.class);
+                Intent i = new Intent(MainActivity.this, CustomerSignInActivity.class);
                 startActivity(i);
             }
         });
