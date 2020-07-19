@@ -81,7 +81,7 @@ public class CustomerSignInActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                dialog.hide();
+                                dialog.dismiss();
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 updateUI(user);
                                 finish();

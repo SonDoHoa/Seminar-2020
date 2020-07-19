@@ -36,7 +36,7 @@ public class CustomerSingUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_sing_up);
         getSupportActionBar().hide();
 
-        tvToSignIn = (TextView)findViewById(R.id.signUpCustomers);
+        tvToSignIn = (TextView)findViewById(R.id.toSignInCustomers);
         s1_email=(EditText)findViewById(R.id.mailCustomers);
         s2_password=(EditText)findViewById(R.id.passCustomers);
         s3_username=(EditText)findViewById(R.id.nameCustomers);
@@ -94,7 +94,7 @@ public class CustomerSingUpActivity extends AppCompatActivity {
     protected void updateUI(FirebaseUser account){
         if(account != null){
             Toast.makeText(this,"You Signed up successfully",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(CustomerSingUpActivity.this,MapCustomerActivity.class));
+            startActivity(new Intent(CustomerSingUpActivity.this,CustomerSignInActivity.class));
         }else {
             Toast.makeText(this,"You didn't signed up",Toast.LENGTH_LONG).show();
         }
