@@ -33,7 +33,6 @@ public class DriverSignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_sign_up);
-        getSupportActionBar().show();
         tvToSignIn = (TextView)findViewById(R.id.toSignInDrivers);
         s1_email=(EditText)findViewById(R.id.mailDrivers);
         s2_password=(EditText)findViewById(R.id.passDrivers);

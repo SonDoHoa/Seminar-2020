@@ -13,4 +13,14 @@
         app:showAsAction="always"
         android:id="@+id/buttonSetting"/>
 
+    <item android:title="History"
+        android:icon="@drawable/ic_history"
+        app:showAsAction="always"
+        android:id="@+id/buttonHistory"/>
+
+    <item android:id="@+id/workingSwitchItem"
+    android:title="Switch for working"
+        app:showAsAction="always"
+    android:actionLayout="@layout/switch_layout"/>
+
 </menu>

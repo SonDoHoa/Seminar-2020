@@ -132,7 +132,7 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
 
                         break;
                     case 2:
-//                        recordRide();
+                        recordRide();
                         endRide();
                         break;
                 }
@@ -152,6 +152,20 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_action, menu);
+
+        MenuItem itemSwitch = menu.findItem(R.id.workingSwitchItem);
+        itemSwitch.setActionView(R.layout.switch_layout);
+        final Switch sw = menu.findItem(R.id.workingSwitchItem).getActionView().findViewById(R.id.workingSwitch);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    connectDriver();
+                }else{
+                    disconnectDriver();
+                }
+            }
+        });
         return true;
     }
 
@@ -170,6 +184,11 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
         }
         else if (item.getItemId() == R.id.buttonSetting){
             startActivity(new Intent(MapDriverActivity.this, DriverSettingsActivity.class));
+        }
+        else if (item.getItemId() == R.id.buttonHistory){
+            Intent intent = new Intent(MapDriverActivity.this, HistoryActivity.class);
+            intent.putExtra("customerOrDriver", "Drivers");
+            startActivity(intent);
         }
         return true;
     }
@@ -333,6 +352,7 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
         customerId="";
+        rideDistance = 0;
 
         if(pickupMarker != null){
             pickupMarker.remove();
@@ -345,6 +365,29 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
         mCustomerPhone.setText("");
         mCustomerDestination.setText("Destination: --");
         mCustomerProfileImage.setImageResource(R.drawable.ic_default_user);
+    }
+
+    private void recordRide(){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(userId).child("history");
+        DatabaseReference customerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("history");
+        DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference().child("history");
+        String requestId = historyRef.push().getKey();
+        driverRef.child(requestId).setValue(true);
+        customerRef.child(requestId).setValue(true);
+
+        HashMap map = new HashMap();
+        map.put("driver", userId);
+        map.put("customer", customerId);
+        map.put("rating", 0);
+        map.put("timestamp", getCurrentTimestamp());
+        map.put("destination", destination);
+        map.put("location/from/lat", pickupLatLng.latitude);
+        map.put("location/from/lng", pickupLatLng.longitude);
+        map.put("location/to/lat", destinationLatLng.latitude);
+        map.put("location/to/lng", destinationLatLng.longitude);
+        map.put("distance", rideDistance);
+        historyRef.child(requestId).updateChildren(map);
     }
 
     private Long getCurrentTimestamp() {
@@ -396,7 +439,9 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
         public void onLocationResult(LocationResult locationResult) {
             for(Location location : locationResult.getLocations()){
 
-
+                if(!customerId.equals("") && mLastLocation!=null && location != null){
+                    rideDistance += mLastLocation.distanceTo(location)/1000;
+                }
                     mLastLocation = location;
 
 

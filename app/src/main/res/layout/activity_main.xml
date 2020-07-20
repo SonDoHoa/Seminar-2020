@@ -4,28 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/tvDriver"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Drivers"
-        android:textSize="18sp"
+        android:textColor="#fff"
+        android:textSize="40sp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="300dp"/>
+        android:layout_marginTop="400dp"/>
 
     <TextView
         android:id="@+id/tvCustomer"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Customers"
-        android:textSize="18sp"
+        android:textColor="#fff"
+        android:textSize="40sp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="370dp"/>
+        android:layout_marginTop="460dp"/>
 
 </RelativeLayout>

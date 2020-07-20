@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/Profile"
+        android:icon="@drawable/icons8_user_male_64"
+        android:title="Profile"/>
+    <item android:id="@+id/History"
+        android:icon="@drawable/icons8_time_machine_64"
+        android:title="History"/>
+    <item android:id="@+id/Chat"
+        android:icon="@drawable/icons8_chat_64"
+        android:title="Chat with driver"/>
+</group>
+
+    <item android:title="">
+        <menu>
+            <item android:id="@+id/Help"
+                android:icon="@drawable/icons8_help_100"
+                android:title="Help"/>
+            <item android:id="@+id/logOut"
+                android:icon="@drawable/icons8_export_100"
+                android:title="Log out"/>
+        </menu>
+    </item>
+
+
+</menu>

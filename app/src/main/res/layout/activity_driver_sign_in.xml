@@ -4,17 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverSignInActivity">
+    tools:context=".DriverSignInActivity"
+    android:background="@drawable/background">
 
     <TextView
+        android:id="@+id/driversignin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="139dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="60dp"
         android:text="Drivers"
+        android:textColor="#fff"
         android:textSize="70sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driversignin"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="0dp"
+        android:text="sign in"
+        android:textColor="#fff"
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/editTextMailDrivers"
@@ -22,10 +35,12 @@
         android:layout_height="wrap_content"
         android:hint="@string/email"
         android:text="hhoangson@gmail.com"
+        android:textColor="#fff"
+        android:textSize="20sp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="300dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="170dp"
         android:autofillHints=""
         android:inputType="textEmailAddress" />
 
@@ -35,10 +50,12 @@
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:text="112233"
+        android:textColor="#fff"
+        android:textSize="20sp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="370dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
         android:autofillHints=""
         android:inputType="textPassword" />
 
@@ -49,8 +66,8 @@
         android:text="@string/sign_in"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="440dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
         android:clickable="true"/>
 
     <TextView
@@ -58,10 +75,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/don_t_have_an_account_sign_up"
-        android:textColor="#000000"
         android:textSize="18sp"
+        android:textColor="#fff"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="20dp"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

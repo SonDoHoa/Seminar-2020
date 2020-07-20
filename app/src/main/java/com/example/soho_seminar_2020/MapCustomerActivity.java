@@ -1,6 +1,7 @@
 package com.example.soho_seminar_2020;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -43,6 +44,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,8 +61,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -79,6 +86,7 @@ import java.util.Map;
 public class MapCustomerActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    public static final String TAG = "PLACE";
     Location mLastLocation;
     LocationRequest mLocationRequest;
 
@@ -107,6 +115,8 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
     private RadioGroup mRadioGroup;
 
     private RatingBar mRatingBar;
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 23487;
+    private PlacesClient placesClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,11 +129,17 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapCustomer);
         mapFragment.getMapAsync(this);
 
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getString(R.string.google_api_key), Locale.US);
-        }
+//        if (!Places.isInitialized()) {
+//            Places.initialize(getApplicationContext(), getString(R.string.google_api_key), Locale.US);
+//        }
+        // Initialize the SDK
+        Places.initialize(getApplicationContext(), String.valueOf(R.string.google_api_key));
+
+        // Create a new PlacesClient instance
+        PlacesClient placesClient = Places.createClient(this);
 
         destinationLatLng = new LatLng(0.0,0.0);
+        mRatingBar = findViewById(R.id.ratingBar);
 
         mDriverInfo = (LinearLayout) findViewById(R.id.driverInfo);
 
@@ -213,17 +229,19 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
+//         Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME));
 
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NotNull Place place) {
                 // TODO: Get info about the selected place.
+                Log.e(TAG, "Place: " + place.getName() + ", " + place.getId());
                 destination = place.getName();
                 destinationLatLng = place.getLatLng();
             }
@@ -232,15 +250,36 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onError(@NotNull Status status) {
                 // TODO: Handle the error.
-
+                Log.e(TAG, "An error occurred: " + status);
             }
         });
+    }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                destination = place.getName();
+                destinationLatLng = place.getLatLng();
+                Log.e(TAG, "Place: " + place.getName() + ", " + place.getId());
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.e(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_action, menu);
+        MenuItem item = menu.findItem(R.id.workingSwitchItem);
+        item.setVisible(false);
         return true;
     }
 
@@ -257,6 +296,10 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
         }
         else if (item.getItemId() == R.id.buttonSetting){
             startActivity(new Intent(MapCustomerActivity.this, CustomerSettingsActivity.class));
+        }else if(item.getItemId() == R.id.buttonHistory) {
+            Intent intent = new Intent(MapCustomerActivity.this, HistoryActivity.class);
+            intent.putExtra("customerOrDriver", "Customers");
+            startActivity(intent);
         }
         return true;
     }
@@ -391,7 +434,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
 
 
 
-                    mDriverMarker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("your driver").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car)));
+                    mDriverMarker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("your driver").icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
                 }
 
             }
@@ -429,6 +472,18 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                     }
                     if(dataSnapshot.child("profileImageUrl").getValue()!=null){
                         Glide.with(getApplication()).load(dataSnapshot.child("profileImageUrl").getValue().toString()).into(mDriverProfileImage);
+                    }
+
+                    int ratingSum = 0;
+                    float ratingsTotal = 0;
+                    float ratingsAvg = 0;
+                    for (DataSnapshot child : dataSnapshot.child("rating").getChildren()){
+                        ratingSum = ratingSum + Integer.valueOf(child.getValue().toString());
+                        ratingsTotal++;
+                    }
+                    if(ratingsTotal!= 0){
+                        ratingsAvg = ratingSum/ratingsTotal;
+                        mRatingBar.setRating(ratingsAvg);
                     }
                 }
             }

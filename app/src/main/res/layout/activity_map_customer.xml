@@ -14,12 +14,13 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp">
-
         <fragment android:id="@+id/autocomplete_fragment"
-            android:layout_width="match_parent"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             />
+
     </androidx.cardview.widget.CardView>
     <fragment
         android:layout_width="match_parent"
@@ -28,10 +29,12 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true">
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioGroup"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,8 +113,12 @@
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="call Soon"
-                android:id="@+id/callSoon"/>
+                android:text="CALL SOON"
+                android:id="@+id/callSoon"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textAppearance="?attr/textAppearanceButton"
+                style="@style/Widget.MaterialComponents.Button"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

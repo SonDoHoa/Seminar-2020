@@ -13,11 +13,13 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/customerInfo"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
         android:orientation="vertical"
+        android:layout_centerHorizontal="true"
         android:background="@android:color/white"
         android:visibility="visible"
         android:elevation="1dp"
@@ -25,6 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="100sp"
@@ -32,36 +35,46 @@
                 android:id="@+id/customerProfileImage"
                 android:src="@drawable/ic_default_user"
                 android:padding="20sp"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="40sp">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/customerDestination"
-                    android:paddingBottom="10sp"
-                    android:text="Destination: --"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:paddingBottom="10sp"
+                    android:text="Destination: --" />
+
+                <TextView
                     android:id="@+id/customerName"
-                    android:paddingBottom="10sp"
-                    android:paddingTop="20sp"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/customerPhone"
+                    android:padding="5dp"
+                    android:paddingTop="10sp"
                     android:paddingBottom="10sp"
-                    android:paddingTop="20sp"/>
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/customerPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp" />
             </LinearLayout>
         </LinearLayout>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="picked customer"
-            android:id="@+id/rideStatus"/>
+            android:id="@+id/rideStatus"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textAppearance="?attr/textAppearanceButton"
+            style="@style/Widget.MaterialComponents.Button"/>
 
 
     </LinearLayout>
