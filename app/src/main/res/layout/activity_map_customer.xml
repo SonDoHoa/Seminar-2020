@@ -7,6 +7,7 @@
     tools:context=".MapCustomerActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/searchPlaces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,7 +16,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp">
         <fragment android:id="@+id/autocomplete_fragment"
-            android:layout_width="290dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"

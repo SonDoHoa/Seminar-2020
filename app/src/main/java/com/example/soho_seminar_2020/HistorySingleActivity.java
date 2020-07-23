@@ -149,7 +149,6 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
                             distance = child.getValue().toString();
                             rideDistance.setText(distance.substring(0, Math.min(distance.length(), 5)) + " km");
                             ridePrice = Double.valueOf(distance) * 0.5;
-
                         }
                         if (child.getKey().equals("destination")){
                             rideLocation.setText(child.getValue().toString());
@@ -246,11 +245,6 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
     }
 
 
-
-
-
-
-
     private void getUserInformation(String otherUserDriverOrCustomer, String otherUserId) {
         DatabaseReference mOtherUserDB = FirebaseDatabase.getInstance().getReference().child("Users").child(otherUserDriverOrCustomer).child(otherUserId);
         mOtherUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -282,6 +276,7 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
         String date = DateFormat.format("MM-dd-yyyy hh:mm", cal).toString();
         return date;
     }
+
     private void getRouteToMarker() {
         Routing routing = new Routing.Builder()
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
@@ -308,12 +303,13 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
             Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onRoutingStart() {
     }
+
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(pickupLatLng);
         builder.include(destinationLatLng);
@@ -356,6 +352,7 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onRoutingCancelled() {
     }
+
     private void erasePolylines(){
         for(Polyline line : polylines){
             line.remove();

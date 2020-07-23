@@ -156,6 +156,7 @@ public class MapDriverActivity extends AppCompatActivity implements OnMapReadyCa
         MenuItem itemSwitch = menu.findItem(R.id.workingSwitchItem);
         itemSwitch.setActionView(R.layout.switch_layout);
         final Switch sw = menu.findItem(R.id.workingSwitchItem).getActionView().findViewById(R.id.workingSwitch);
+        sw.setChecked(true);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

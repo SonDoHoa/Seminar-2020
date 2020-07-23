@@ -3,6 +3,7 @@ package com.example.soho_seminar_2020;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -87,6 +88,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
 
     private GoogleMap mMap;
     public static final String TAG = "PLACE";
+    public static final int DEFAULTZOOM = 15;
     Location mLastLocation;
     LocationRequest mLocationRequest;
 
@@ -117,6 +119,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
     private RatingBar mRatingBar;
     private static final int AUTOCOMPLETE_REQUEST_CODE = 23487;
     private PlacesClient placesClient;
+    private CardView searchPalces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +132,11 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapCustomer);
         mapFragment.getMapAsync(this);
 
-//        if (!Places.isInitialized()) {
-//            Places.initialize(getApplicationContext(), getString(R.string.google_api_key), Locale.US);
-//        }
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), getString(R.string.google_maps_key), Locale.US);
+        }
         // Initialize the SDK
-        Places.initialize(getApplicationContext(), String.valueOf(R.string.google_api_key));
+//        Places.initialize(getApplicationContext(), String.valueOf(R.string.google_api_key));
 
         // Create a new PlacesClient instance
         PlacesClient placesClient = Places.createClient(this);
@@ -228,14 +231,37 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                 }
             }
         });
+        checkLocationPermission();
 
-//         Initialize the AutocompleteSupportFragment.
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+        Task<Location> locationResult = mFusedLocationClient.getLastLocation();
+        locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful()) {
+                    // Set the map's camera position to the current location of the device.
+                    mLastLocation = task.getResult();
+                    if (mLastLocation != null) {
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(mLastLocation.getLatitude(),
+                                        mLastLocation.getLongitude()), DEFAULTZOOM));
+                    }
+                } else {
+                    Log.d("TAG", "Current location is null. Using defaults.");
+                    Log.e("TAG", "Exception: %s", task.getException());
+                    mMap.moveCamera(CameraUpdateFactory
+                            .newLatLngZoom(new LatLng(10.7629, 106.6822), DEFAULTZOOM));
+                    mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                }
+            }
+        });
+
+        searchPalces = findViewById(R.id.searchPlaces);
+        //Initialize the AutocompleteSupportFragment.
+        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME));
-
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
@@ -246,34 +272,12 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                 destinationLatLng = place.getLatLng();
             }
 
-
             @Override
             public void onError(@NotNull Status status) {
                 // TODO: Handle the error.
                 Log.e(TAG, "An error occurred: " + status);
             }
         });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                destination = place.getName();
-                destinationLatLng = place.getLatLng();
-                Log.e(TAG, "Place: " + place.getName() + ", " + place.getId());
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.e(TAG, status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -574,27 +578,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
 
 
             if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-//                Task<Location> locationResult = mFusedLocationClient.getLastLocation();
-//                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Location> task) {
-//                        if (task.isSuccessful()) {
-//                            // Set the map's camera position to the current location of the device.
-//                            mLastLocation = task.getResult();
-//                            if (mLastLocation != null) {
-//                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-//                                        new LatLng(mLastLocation.getLatitude(),
-//                                                mLastLocation.getLongitude()), 17));
-//                            }
-//                        } else {
-//                            Log.d("TAG", "Current location is null. Using defaults.");
-//                            Log.e("TAG", "Exception: %s", task.getException());
-//                            mMap.moveCamera(CameraUpdateFactory
-//                                    .newLatLngZoom(new LatLng(10.7629, 106.6822), 17));
-//                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-//                        }
-//                    }
-//                });
+
             }else{
                 checkLocationPermission();
             }
@@ -612,11 +596,6 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                     mLastLocation = location;
 
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-
-                    //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    //mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-//                    if(!getDriversAroundStarted)
-//                        getDriversAround();
                 }
             }
         }
